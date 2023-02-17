@@ -54,7 +54,7 @@ class Vector {
     }
 
     get length() { //three dimensional length, returns 2 dimensional if only two dimensions are given
-        let l = Math.sqrt(Math.sqrt(this.x**2 + this.y**2)**2 + this.z**2);
+        let l = Math.sqrt(this.x**2 + this.y**2 + this.z**2);
         return l;
     }
 
@@ -209,6 +209,32 @@ class Vector {
         if (this.z != null) {
             let z = this.z/dividend;
             this.#z = z;
+        }
+    }
+
+    normalize() {
+        let len = this.length;
+        this.#x /= len;
+        this.#y /= len;
+        if (this.z != null) {
+            let z = this.z/dividend;
+            this.#z = z;
+        }
+    }
+
+    static normalize(vector) {
+        let len = vector.length;
+        if (vector.dimension == 3) {
+            return new Vector(
+                vector.x/len, 
+                vector.y/len, 
+                vector.z/len
+                );
+        } else {
+            return new Vector(
+                vector.x/len, 
+                vector.y/len
+                );
         }
     }
 

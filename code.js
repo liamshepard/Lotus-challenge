@@ -1,13 +1,34 @@
 'use strict';
 let canvasGfx = document.getElementById("canvasGfx");
+let canvasMap = document.getElementById("canvasMap");
 let pre = document.getElementById("console");
 let buttonRun = document.getElementById("buttonRun");
 let buttonReset = document.getElementById("buttonReset");
 let ctx = canvasGfx.getContext("2d");
+let ctxMap = canvasMap.getContext("2d");
 const WIDTH = 1280;
 const HEIGHT = 800;
-const WIDTH2 = WIDTH*2;
-const HEIGHT2 = HEIGHT*2;
+
+let playerList = [];
+
+let keyPresses = {
+    'Escape' : false
+};
+
+for (let i = 0; i < playerList.length; i++) {
+    keyPresses.playerList[i].controlDict.turnLeft = false;
+    keyPresses.playerList[i].controlDict.turnRight = false;
+    keyPresses.playerList[i].controlDict.goForwards = false;
+    keyPresses.playerList[i].controlDict.goBackwards = false;
+}
+
+document.onkeydown = function(event) {
+    keyPresses[event.key] = true;
+}
+
+document.onkeyup = function(event) {
+    keyPresses[event.key] = false;
+}
 
 function loop() {
     
