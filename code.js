@@ -15,7 +15,7 @@ const fps = 60;
 const hz = 1/fps;
 
 let playerList = [
-    new Player(WIDTH/2, HEIGHT/2,'ongelsk')
+    new Player(WIDTH/(2*worldScale), HEIGHT/(2*worldScale),'ongelsk')
 ];
 
 let keyPresses = {

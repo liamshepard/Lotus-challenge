@@ -9,8 +9,8 @@ class Player {
         this.#x = x;
         this.#y = y;
         this.directionVector = new Vector(0,-30);
-        this.speed = 4;
-        this.accelerationTop = 10;
+        this.speed = 0;
+        this.accelerationTop = 5;
         this.accelerationTop2 = this.accelerationTop**2; 
         //so you dont have to calculate each frame
         this.brakeForce = 10;
@@ -26,8 +26,8 @@ class Player {
 
         // drawing top down info
         this.drawTopDown = drawTopDown;
-        this.mapSize = [40, 70];
-         //40*70 pixels on screen
+        this.mapSize = [2*worldScale, 4*worldScale];
+         //2*4 meters on screen
     }
 
     get x() {
@@ -41,8 +41,8 @@ class Player {
     drawToMiniMap() {
         let vec = Vector.normalize(this.directionVector);
         let corners = [];
-            let x = this.x;
-            let y = this.y;
+            let x = this.x*worldScale;
+            let y = this.y*worldScale;
             x += vec.x*(this.mapSize[1]/2);
             y += vec.y*(this.mapSize[1]/2);
             vec.rotate2d(Math.PI/2);
