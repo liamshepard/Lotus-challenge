@@ -155,6 +155,18 @@ class Vector {
         } else return new Vector(x, y);
     }
 
+    static addMultiple(vList) {
+        let v1 = vList[0];
+        for (i=1; i<vList.length; i++) {
+            v1.add(vList[i]);
+        }
+        return(v1);
+    }
+
+    static copyVector(vector) {
+        return new Vector(vector.x, vector.y, vector.z);
+    }
+
     static dotProduct(left, right) {
         if (left.dimension != right.dimension) {
             throw "The vectors you are trying to take the dot product of do not have the same dimensions";
