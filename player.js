@@ -25,7 +25,7 @@ class Player {
         }
 
         // drawing top down info
-        this.drawTopDown = drawTopDown;
+        this.drawTopDown = drawTopDown; //bool
         this.mapSize = [2*worldScale, 4*worldScale];
          //2*4 meters on screen
     }
@@ -39,40 +39,23 @@ class Player {
     }
 
     drawToMiniMap() {
-        let vec = Vector.normalize(this.directionVector);
-        let corners = [];
-            let x = this.x*worldScale;
-            let y = this.y*worldScale;
-            x += vec.x*(this.mapSize[1]/2);
-            y += vec.y*(this.mapSize[1]/2);
-            vec.rotate2d(Math.PI/2);
-            x += vec.x*(this.mapSize[0]/2);
-            y += vec.y*(this.mapSize[0]/2);
-            corners.push([x, y]);
-            for (let i = 0; i < 3; i++) {
-                vec.rotate2d(Math.PI/2);
-                x += vec.x*this.mapSize[!(i % 2)*1];
-                y += vec.y*this.mapSize[!(i % 2)*1];
-                corners.push([x, y]);
-            }
-
-        ctxMap.fillStyle = "black";
-        ctxMap.beginPath();
-        ctxMap.moveTo(corners[3][0], corners[3][1]);
-        for (let i = 0; i < corners.length; i++) {
-            ctxMap.lineTo(corners[i][0], corners[i][1]);
-        }
-        ctxMap.closePath();
-        ctxMap.fill();
+        drawVectorRect(this.x*worldScale, 
+            this.y*worldScale, 
+            this.directionVector, 
+            this.mapSize
+        );
     }    
 
     update() {
-        let turn = (
-            keyPresses[this.controlDict.turnRight] - 
-            keyPresses[this.controlDict.turnLeft]
-        )*Math.PI/40;
-        // console.log(keyPresses[this.controlDict.turnLeft])
-        this.directionVector.rotate2d(turn);
+
+        if (this.speed > 0) { //prevents turning if car is stationary
+            let turn = (
+                keyPresses[this.controlDict.turnRight] - 
+                keyPresses[this.controlDict.turnLeft]
+            )*Math.PI/40;
+            // console.log(keyPresses[this.controlDict.turnLeft])
+            this.directionVector.rotate2d(turn);
+        }
 
         let acc = (
             keyPresses[this.controlDict.goForwards] 
