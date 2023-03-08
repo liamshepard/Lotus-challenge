@@ -39,11 +39,8 @@ class Player {
     }
 
     drawToMiniMap() {
-        drawVectorRect(this.x*worldScale, 
-            this.y*worldScale, 
-            this.directionVector, 
-            this.mapSize
-        );
+        ctxMap.fillStyle = "black";
+        ctxMap.fillRect(WIDTH / 2 - 20, HEIGHT / 2 - 40, 20, 40);
     }    
 
     update() {

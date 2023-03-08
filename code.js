@@ -38,18 +38,6 @@ document.onkeyup = function(event) {
     keyPresses[event.key] = false;
 }
 
-function drawScreen() {
-
-}
-
-function drawMiniMap() {
-    ctxMap.fillStyle = 'green';
-    ctxMap.fillRect(0, 0, WIDTH, HEIGHT);
-    for (let i = 0; i < playerList.length; i++) {
-        playerList[i].drawToMiniMap();
-    }
-}
-
 function update() {
 
     for (let i = 0; i < playerList.length; i++) {

@@ -1,5 +1,21 @@
 'use strict';
 
+function drawScreen() {
+
+}
+
+function drawMiniMap() {
+    let grd = ctxMap.createLinearGradient(0, 0, WIDTH, HEIGHT);
+    grd.addColorStop(0, "red");
+    grd.addColorStop(1, "blue");
+
+    ctxMap.fillStyle = grd;
+    ctxMap.fillRect(0, 0, WIDTH, HEIGHT);
+
+    playerList[0].drawToMiniMap();
+
+    }
+
 function drawVectorRect(centerX, centerY, directionVector, size) {
     // example:
     // centerX = 100
