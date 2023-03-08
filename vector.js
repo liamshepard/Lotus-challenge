@@ -239,14 +239,16 @@ class Vector {
     }
 
     rotate2d(theta) { //tar en liste med koordinater
-        this.#x = this.x*Math.cos(theta) - this.y*Math.sin(theta);
-        this.#y = this.x*Math.sin(theta) + this.y*Math.cos(theta);
+        let x = this.x;
+        let y = this.y;
+        this.#x = x*Math.cos(theta) - y*Math.sin(theta);
+        this.#y = x*Math.sin(theta) + y*Math.cos(theta);
     }
 
     static rotate2d(x, y, theta) { //tar en liste med koordinater
         let nx = x*Math.cos(theta) - y*Math.sin(theta);
         let ny = x*Math.sin(theta) + y*Math.cos(theta);
-        return nx, ny;
+        return [nx, ny];
     }
     
 }

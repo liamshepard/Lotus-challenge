@@ -1,28 +1,36 @@
 'use strict';
 let canvasGfx = document.getElementById("canvasGfx");
 let canvasMap = document.getElementById("canvasMap");
-let pre = document.getElementById("console");
+let preOutput = document.getElementById("preOutput");
 let buttonRun = document.getElementById("buttonRun");
 let buttonReset = document.getElementById("buttonReset");
 let ctx = canvasGfx.getContext("2d");
+ctx.imageSmoothingEnabled = false; //turns off antialiasing
 let ctxMap = canvasMap.getContext("2d");
 const WIDTH = 1280;
 const HEIGHT = 800;
 
-let playerList = [];
+const worldScale = 15;
+const fps = 60;
+const hz = 1/fps;
+
+let playerList = [
+    new Player(WIDTH/(2*worldScale), HEIGHT/(2*worldScale),'ongelsk')
+];
 
 let keyPresses = {
     'Escape' : false
 };
 
 for (let i = 0; i < playerList.length; i++) {
-    keyPresses.playerList[i].controlDict.turnLeft = false;
-    keyPresses.playerList[i].controlDict.turnRight = false;
-    keyPresses.playerList[i].controlDict.goForwards = false;
-    keyPresses.playerList[i].controlDict.goBackwards = false;
+    keyPresses[playerList[i].controlDict.turnLeft] = false;
+    keyPresses[playerList[i].controlDict.turnRight] = false;
+    keyPresses[playerList[i].controlDict.goForwards] = false;
+    keyPresses[playerList[i].controlDict.goBackwards] = false;
 }
 
 document.onkeydown = function(event) {
+    // console.log(event.key);
     keyPresses[event.key] = true;
 }
 
@@ -30,10 +38,31 @@ document.onkeyup = function(event) {
     keyPresses[event.key] = false;
 }
 
+function drawScreen() {
+
+}
+
+function drawMiniMap() {
+    ctxMap.fillStyle = 'green';
+    ctxMap.fillRect(0, 0, WIDTH, HEIGHT);
+    for (let i = 0; i < playerList.length; i++) {
+        playerList[i].drawToMiniMap();
+    }
+}
+
+function update() {
+
+    for (let i = 0; i < playerList.length; i++) {
+        playerList[i].update();
+    }
+    drawScreen();
+    drawMiniMap();
+}
+
 function loop() {
     
-    if (buttonPressed == true) {
-        update(progress);
+    if (buttonPressed == true) { //pause under the game window
+        update();
     }
 
     window.requestAnimationFrame(loop);
