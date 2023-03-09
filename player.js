@@ -5,23 +5,24 @@ class Player {
     #x;
     #y;
     
-    constructor(x, y, sprite, drawTopDown = false) {
+    constructor(x, y, spriteSheet, drawTopDown = false) {
         this.#x = x;
         this.#y = y;
         this.directionVector = new Vector(0,-30);
         this.speed = 0;
+        
         this.accelerationTop = 5;
         this.accelerationTop2 = this.accelerationTop**2; 
-        //so you dont have to calculate each frame
+
         this.brakeForce = 10;
 
-        this.sprite = sprite;
+        this.spriteSheet = spriteSheet;
 
         this.controlDict = {
-            turnLeft    : 'ArrowLeft',
-            turnRight   : 'ArrowRight',
-            goForwards  : 'ArrowUp',
-            goBackwards : 'ArrowDown'
+            turnLeft    : 'a',
+            turnRight   : 'd',
+            goForwards  : 'w',
+            goBackwards : 's'
         }
 
         // drawing top down info
@@ -39,11 +40,14 @@ class Player {
     }
 
     drawToMiniMap() {
-        drawVectorRect(this.x*worldScale, 
-            this.y*worldScale, 
-            this.directionVector, 
-            this.mapSize
-        );
+        ctxMap.fillStyle = "black";
+        ctxMap.fillRect(WIDTH / 2 - this.mapSize[0] / 2, HEIGHT / 2 - this.mapSize[1] / 2, this.mapSize[0], this.mapSize[1]);
+        ctxMap.beginPath();
+        ctxMap.moveTo(WIDTH / 2, HEIGHT / 2);
+        ctxMap.lineTo(WIDTH / 2 + this.directionVector.x * this.speed, HEIGHT / 2 + this.directionVector.y * this.speed);
+        ctxMap.stroke();
+        ctxMap.closePath();
+        console.log(this.speed);
     }    
 
     update() {
