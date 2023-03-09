@@ -7,8 +7,8 @@ let buttonReset = document.getElementById("buttonReset");
 let ctx = canvasGfx.getContext("2d");
 ctx.imageSmoothingEnabled = false; //turns off antialiasing
 let ctxMap = canvasMap.getContext("2d");
-const WIDTH = 1280;
-const HEIGHT = 800;
+const WIDTH = ctx.canvas.width;
+const HEIGHT = ctx.canvas.height;
 
 const worldScale = 15;
 const fps = 60;

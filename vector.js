@@ -250,5 +250,21 @@ class Vector {
         let ny = x*Math.sin(theta) + y*Math.cos(theta);
         return [nx, ny];
     }
+
+    angleDiff2d(vector) {
+        let diff = this.angle - vector.angle;
+        if (diff > Math.PI) {
+            diff = Math.PI*2 - diff;
+        }
+        return diff;
+    }
     
+    static angleDiff2d(vector1, vector2) {
+        let diff = vector1.angle - vector2.angle;
+        if (diff > Math.PI) {
+            diff = Math.PI*2 - diff;
+        }
+        return diff;
+    }
+
 }
