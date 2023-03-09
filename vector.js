@@ -253,7 +253,7 @@ class Vector {
 
     angleDiff2d(vector) {
         let diff = this.angle - vector.angle;
-        if (diff > Math.PI) {
+        if (Math.abs(diff) > Math.PI) {
             diff = Math.PI*2 - diff;
         }
         return diff;
@@ -261,7 +261,7 @@ class Vector {
     
     static angleDiff2d(vector1, vector2) {
         let diff = vector1.angle - vector2.angle;
-        if (diff > Math.PI) {
+        if (Math.abs(diff) > Math.PI) {
             diff = Math.PI*2 - diff;
         }
         return diff;
