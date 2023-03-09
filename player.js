@@ -44,7 +44,7 @@ class Player {
         ctxMap.fillRect(WIDTH / 2 - this.mapSize[0] / 2, HEIGHT / 2 - this.mapSize[1] / 2, this.mapSize[0], this.mapSize[1]);
         ctxMap.beginPath();
         ctxMap.moveTo(WIDTH / 2, HEIGHT / 2);
-        ctxMap.lineTo(WIDTH / 2 + this.directionVector.x * this.speed, HEIGHT / 2 + this.directionVector.y * this.speed);
+        ctxMap.lineTo(WIDTH / 2 - this.directionVector.x * this.speed, HEIGHT / 2 + this.directionVector.y * this.speed);
         ctxMap.stroke();
         ctxMap.closePath();
         console.log(this.speed);
@@ -56,7 +56,7 @@ class Player {
             let turn = (
                 keyPresses[this.controlDict.turnRight] - 
                 keyPresses[this.controlDict.turnLeft]
-            )*Math.PI/40;
+            )*Math.PI/60;
             // console.log(keyPresses[this.controlDict.turnLeft])
             this.directionVector.rotate2d(turn);
         }
@@ -72,6 +72,7 @@ class Player {
         }
         
         preOutput.innerHTML = this.speed;
+        preOutput.innerHTML += "\nx: " + this.x + "\ty: " + this.y;
 
         let velocityVector = Vector.normalize(this.directionVector);
         velocityVector.scale(this.speed);
