@@ -157,7 +157,8 @@ class Vector {
 
     static addMultiple(vList) {
         let v1 = vList[0];
-        for (i=1; i<vList.length; i++) {
+        let nV = Vector.copyVector(v1);
+        for (let i=1; i<vList.length; i++) {
             v1.add(vList[i]);
         }
         return(v1);
@@ -200,6 +201,16 @@ class Vector {
         if (this.dimension != vector.dimension) {
             throw "The vectors you are trying to add do not have the same dimensions";
         } else if (this.dimension == 3) this.#z -= vector.z;
+    }
+
+    static scale(scalar, vector) {
+        let x = vector.x*scalar;
+        let y = vector.y*scalar;
+        if (vector.z != null) {
+            let z = vector.z*scalar;
+            return(new Vector(x, y, z));
+        }
+        return(new Vector(x, y))
     }
     
     scale(scalar) {
@@ -257,10 +268,11 @@ class Vector {
         this.#y = x*Math.sin(theta) + y*Math.cos(theta);
     }
 
-    static rotate2d(x, y, theta) { //tar en liste med koordinater
-        let nx = x*Math.cos(theta) - y*Math.sin(theta);
-        let ny = x*Math.sin(theta) + y*Math.cos(theta);
-        return [nx, ny];
+    static rotate2d(vector, theta) { //tar en liste med koordinater
+        let nx = vector.x*Math.cos(theta) - vector.y*Math.sin(theta);
+        let ny = vector.x*Math.sin(theta) + vector.y*Math.cos(theta);
+        let newVector = new Vector(nx, ny);
+        return(newVector);
     }
     
 }
