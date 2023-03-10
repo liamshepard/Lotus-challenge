@@ -7,15 +7,15 @@ let buttonReset = document.getElementById("buttonReset");
 let ctx = canvasGfx.getContext("2d");
 ctx.imageSmoothingEnabled = false; //turns off antialiasing
 let ctxMap = canvasMap.getContext("2d");
-const WIDTH = 1280;
-const HEIGHT = 800;
+const WIDTH = ctx.canvas.width;
+const HEIGHT = ctx.canvas.height;
 
 const worldScale = 15;
 const fps = 60;
 const hz = 1/fps;
 
 let playerList = [
-    new Player(WIDTH/2, HEIGHT/2,'ongelsk')
+    new Player(WIDTH/(2*worldScale), HEIGHT/(2*worldScale),'ongelsk')
 ];
 
 let keyPresses = {
@@ -36,18 +36,6 @@ document.onkeydown = function(event) {
 
 document.onkeyup = function(event) {
     keyPresses[event.key] = false;
-}
-
-function drawScreen() {
-
-}
-
-function drawMiniMap() {
-    ctxMap.fillStyle = 'green';
-    ctxMap.fillRect(0, 0, WIDTH, HEIGHT);
-    for (let i = 0; i < playerList.length; i++) {
-        playerList[i].drawToMiniMap();
-    }
 }
 
 function update() {

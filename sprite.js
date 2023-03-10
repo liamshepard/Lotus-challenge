@@ -1,25 +1,19 @@
-'use strict';
+"use strict";
 
-let spriteData = {
-    'spriteSheets/amogus.png' : {
-        animationFrames : {
-            driving : 3,
-            crashed : 2
-        },
-        spriteWidth     : 100,
-        spriteHeight    : 100,
-        vertical        : false
-    }
-}
+class SpriteSheet {
 
-class Sprite {
+    spriteSheetURL;
+    spriteWidth;
+    spriteHeight;
+    spriteSheetRows;
+    spriteSheetColumns
 
-    #spriteURL;
-//  spriteURL example "amogus.png"
     constructor(spriteURL) {
-        // need to put data about how to animate the sprite, 
-        // we fix later
-        this.#spriteURL = "spriteSheets/" + spriteURL;
+        this.spriteURL = "spriteSheets/" + spriteURL;
+        this.spriteWidth = spriteWidth;
+        this.spriteHeight = spriteHeight;
+        this.spriteSheetRows = spriteSheetRows;
+        this.spriteSheetColumns = spriteSheetColumns;
     }
 
     drawSprite(x,y) {
