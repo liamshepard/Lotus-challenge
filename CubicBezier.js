@@ -8,7 +8,7 @@ class CubicBezier {
     D;
     scale;
 
-    constructor(A, B, C, D, scale=20) {
+    constructor(A, B, C, D, scale=1) {
         this.A = A;
         this.B = B;
         this.C = C;
@@ -30,7 +30,7 @@ class CubicBezier {
                                     (Vector.copyVector(this.A))
                                     ])
 
-        if (draw==true) {
+        if (draw) {
             ctx.fillStyle = "RED";
             ctx.beginPath();
             ctx.arc((P.x*this.scale)+(WIDTH/4), (P.y*this.scale)+(HEIGHT/2), 2, 0, 2*Math.PI);
@@ -39,9 +39,34 @@ class CubicBezier {
         return(P)
     }
 
-    distance(P) {
+    getTangent(t, draw = false) {
+        // let P =     (-this.A+3*this.B-3*this.C+this.D)*Math.pow(t, 3)
+        //             + (3*this.A-6*this.B+3*this.C)*Math.pow(t, 2)
+        //             + (-3*this.A+3*this.B)*t
+        //             + (this.A);
 
+        
+        let tangent = Vector.scale(0.3, Vector.addMultiple([
+                                    (Vector.scale((3*Math.pow(t, 2)), Vector.addMultiple([Vector.scale(-1, this.A), Vector.scale(3, this.B), Vector.scale(-3, this.C), Vector.copyVector(this.D)]))),
+                                    (Vector.scale((2*t), Vector.addMultiple([Vector.scale(3, this.A), Vector.scale(-6, this.B), Vector.scale(3, this.C)]))),
+                                    (Vector.addMultiple([Vector.scale(-3, this.A), Vector.scale(3, this.B)]))
+                                    ]))
+
+        if (draw) {
+            console.log(tangent);
+            let startP = Vector.subtract(this.getPoint(t), tangent);
+            let endP = Vector.add(this.getPoint(t), tangent);
+
+            ctx.strokeStyle = "GREEN";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(WIDTH/4+startP.x*this.scale, HEIGHT/2+startP.y*this.scale);
+            ctx.lineTo(WIDTH/4+endP.x*this.scale, HEIGHT/2+endP.y*this.scale);
+            ctx.stroke();
+        }
+        return(tangent);
     }
+
 
     drawCurve() {
         for (let t =0; t<=1; t+=0.01) {
