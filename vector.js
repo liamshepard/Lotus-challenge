@@ -201,6 +201,10 @@ class Vector {
         }
     }
 
+    static scale(vector, scalar) {
+        return new Vector(vector.x*scalar, vector.y*scalar, vector.z*scalar);
+    }
+
     divide(dividend) {
         let x = this.x/dividend;
         this.#x = x;
@@ -220,6 +224,14 @@ class Vector {
             let z = this.z/dividend;
             this.#z = z;
         }
+    }
+
+    mirrorX() {
+        this.#x = -this.x;
+    }
+
+    static mirrorX(vector) {
+        return new Vector(-vector.x, vector.y);
     }
 
     static normalize(vector) {

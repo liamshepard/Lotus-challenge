@@ -1,14 +1,56 @@
 'use strict';
 
 function drawScreen() {
+    //draws the main screen
 
 }
 
 function drawMiniMap() {
+    //draws the minimap
     ctxMap.fillStyle = "green";
     ctxMap.fillRect(0, 0, WIDTH, HEIGHT);
-    drawVectorRect(WIDTH/2, HEIGHT/2, new Vector(-playerList[0].directionVector.x, playerList[0].directionVector.y), [8*worldScale,5000*worldScale], "gray");
+    
+    let roadCenterPos = new Vector(WIDTH/(2*worldScale), HEIGHT/(2*worldScale) - 50);
+    let roadDirectionVector = new Vector(0,-1);
+    drawRelativeVectorRect(playerList[0], roadCenterPos, roadDirectionVector, [8*worldScale,100*worldScale], 'gray');
+    
+    let stoneCenterPos = new Vector(WIDTH/(2*worldScale) - 10, HEIGHT/(2*worldScale) - 20);
+    let stoneSize = 4;
+    drawRelativeCircle(playerList[0], stoneCenterPos, stoneSize, 'black');
+
     playerList[0].drawToMiniMap();
+}
+
+function drawRelativeVectorRect(player, centerVector, directionVector, size, color) {
+    let diffVector = Vector.subtract( 
+        centerVector,
+        new Vector(player.x, player.y)
+    );
+    diffVector.rotate2d(player.directionVector.angle);
+    directionVector.rotate2d(player.directionVector.angle);
+
+    drawVectorRect(WIDTH/2 - diffVector.x*worldScale, HEIGHT/2 - diffVector.y*worldScale, 
+        directionVector, 
+        size, 
+        color
+    );
+}
+
+function drawRelativeCircle(player, centerVector, size, color) {
+    let diffVector = Vector.subtract( 
+        centerVector,
+        new Vector(player.x, player.y)
+    );
+    diffVector.rotate2d(player.directionVector.angle);
+
+    ctxMap.fillStyle = color;
+    ctxMap.beginPath();
+    ctxMap.arc(
+        WIDTH/2 - diffVector.x*worldScale, 
+        HEIGHT/2 - diffVector.y*worldScale,
+        size*worldScale/2, 0, 2*Math.PI
+    );
+    ctxMap.fill();
 }
 
 function drawVectorRect(centerX, centerY, directionVector, size, color) {
@@ -43,3 +85,4 @@ function drawVectorRect(centerX, centerY, directionVector, size, color) {
        ctxMap.closePath();
        ctxMap.fill();
 }
+

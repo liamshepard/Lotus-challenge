@@ -47,7 +47,6 @@ class Player {
         ctxMap.lineTo(WIDTH / 2 - this.directionVector.x * this.speed, HEIGHT / 2 + this.directionVector.y * this.speed);
         ctxMap.stroke();
         ctxMap.closePath();
-        console.log(this.speed);
     }    
 
     update() {
@@ -77,8 +76,8 @@ class Player {
         let velocityVector = Vector.normalize(this.directionVector);
         velocityVector.scale(this.speed);
         
-        this.#x += velocityVector.x;
-        this.#y += velocityVector.y;
+        this.#x += velocityVector.x*hz;
+        this.#y += velocityVector.y*hz;
     }
 
     acceleration(speed) {
