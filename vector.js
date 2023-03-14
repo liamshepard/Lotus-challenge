@@ -144,6 +144,10 @@ class Vector {
         return s;
     }
 
+    static copy(vector) {
+        return new Vector(vector.x, vector.y, vector.z);
+    }
+
     static add(left, right) {
         let x = left.x + right.x;
         let y = left.y + right.y;

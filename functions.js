@@ -10,18 +10,52 @@ function drawMiniMap() {
     ctxMap.fillStyle = "green";
     ctxMap.fillRect(0, 0, WIDTH, HEIGHT);
     
-    let roadCenterPos = new Vector(WIDTH/(2*worldScale), HEIGHT/(2*worldScale) - 50);
-    let roadDirectionVector = new Vector(0,-1);
-    drawRelativeVectorRect(playerList[0], roadCenterPos, roadDirectionVector, [8*worldScale,100*worldScale], 'gray');
-    
+    let roadSegmentList = [
+        {
+            pos   : new Vector(WIDTH/(2*worldScale), HEIGHT/(2*worldScale) - 50),
+            vector: new Vector(0,-1)
+        },
+        {
+            pos   : new Vector(WIDTH/(2*worldScale) + 50, HEIGHT/(2*worldScale) - 50),
+            vector: new Vector(1,-1)
+        }
+    ]
+
+    let renderDistance = 100; //100 meters
+
+    for (let i = 0; i < roadSegmentList.length; i++) {
+        if (
+            Math.abs(roadSegmentList[i].pos.x - playerList[0].x) < renderDistance &&
+            Math.abs(roadSegmentList[i].pos.y - playerList[0].y) < renderDistance
+            ) {
+
+            drawRelativeVectorRect(
+                playerList[0], 
+                roadSegmentList[i].pos, 
+                roadSegmentList[i].vector, 
+                [8*worldScale,100*worldScale], 
+                'gray'
+            );
+
+            drawRelativeVectorRect(
+                playerList[0], 
+                roadSegmentList[i].pos, 
+                roadSegmentList[i].vector, 
+                [0.2*worldScale, 3*worldScale], 
+                'yellow'
+            );
+        } 
+    }
+
     let stoneCenterPos = new Vector(WIDTH/(2*worldScale) - 10, HEIGHT/(2*worldScale) - 20);
-    let stoneSize = 4;
-    drawRelativeCircle(playerList[0], stoneCenterPos, stoneSize, 'black');
+    let stoneRadius = 2;
+    drawRelativeCircle(playerList[0], stoneCenterPos, stoneRadius, 'black');
 
     playerList[0].drawToMiniMap();
 }
 
-function drawRelativeVectorRect(player, centerVector, directionVector, size, color) {
+function drawRelativeVectorRect(player, centerVector, directionVectorOriginal, size, color) {
+    let directionVector = Vector.copy(directionVectorOriginal);
     let diffVector = Vector.subtract( 
         centerVector,
         new Vector(player.x, player.y)
@@ -48,7 +82,7 @@ function drawRelativeCircle(player, centerVector, size, color) {
     ctxMap.arc(
         WIDTH/2 - diffVector.x*worldScale, 
         HEIGHT/2 - diffVector.y*worldScale,
-        size*worldScale/2, 0, 2*Math.PI
+        size*worldScale, 0, 2*Math.PI
     );
     ctxMap.fill();
 }
