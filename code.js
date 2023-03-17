@@ -10,12 +10,12 @@ let ctxMap = canvasMap.getContext("2d");
 const WIDTH = ctx.canvas.width;
 const HEIGHT = ctx.canvas.height;
 
-const worldScale = 15;
-const fps = 60;
-const hz = 1/fps;
+const WORLDSCALE = 15;
+const FPS = 60;
+const HZ = 1/FPS;
 
 let playerList = [
-    new Player(WIDTH/(2*worldScale), HEIGHT/(2*worldScale),'ongelsk')
+    new Player(WIDTH/(2*WORLDSCALE), HEIGHT/(2*WORLDSCALE),'ongelsk')
 ];
 
 let keyPresses = {
