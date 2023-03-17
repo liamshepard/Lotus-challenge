@@ -12,11 +12,11 @@ function drawMiniMap() {
     
     let roadSegmentList = [
         {
-            pos   : new Vector(WIDTH/(2*worldScale), HEIGHT/(2*worldScale) - 50),
+            pos   : new Vector(WIDTH/(2*WORLDSCALE), HEIGHT/(2*WORLDSCALE) - 50),
             vector: new Vector(0,-1)
         },
         {
-            pos   : new Vector(WIDTH/(2*worldScale) + 50, HEIGHT/(2*worldScale) - 50),
+            pos   : new Vector(WIDTH/(2*WORLDSCALE) + 50, HEIGHT/(2*WORLDSCALE) - 50),
             vector: new Vector(1,-1)
         }
     ]
@@ -33,7 +33,7 @@ function drawMiniMap() {
                 playerList[0], 
                 roadSegmentList[i].pos, 
                 roadSegmentList[i].vector, 
-                [8*worldScale,100*worldScale], 
+                [8*WORLDSCALE,100*WORLDSCALE], 
                 'gray'
             );
 
@@ -41,13 +41,13 @@ function drawMiniMap() {
                 playerList[0], 
                 roadSegmentList[i].pos, 
                 roadSegmentList[i].vector, 
-                [0.2*worldScale, 3*worldScale], 
+                [0.2*WORLDSCALE, 3*WORLDSCALE], 
                 'yellow'
             );
         } 
     }
 
-    let stoneCenterPos = new Vector(WIDTH/(2*worldScale) - 10, HEIGHT/(2*worldScale) - 20);
+    let stoneCenterPos = new Vector(WIDTH/(2*WORLDSCALE) - 10, HEIGHT/(2*WORLDSCALE) - 20);
     let stoneRadius = 2;
     drawRelativeCircle(playerList[0], stoneCenterPos, stoneRadius, 'black');
 
@@ -63,7 +63,7 @@ function drawRelativeVectorRect(player, centerVector, directionVectorOriginal, s
     diffVector.rotate2d(player.directionVector.angle);
     directionVector.rotate2d(player.directionVector.angle);
 
-    drawVectorRect(WIDTH/2 - diffVector.x*worldScale, HEIGHT/2 - diffVector.y*worldScale, 
+    drawVectorRect(WIDTH/2 - diffVector.x*WORLDSCALE, HEIGHT/2 - diffVector.y*WORLDSCALE, 
         directionVector, 
         size, 
         color
@@ -80,9 +80,9 @@ function drawRelativeCircle(player, centerVector, size, color) {
     ctxMap.fillStyle = color;
     ctxMap.beginPath();
     ctxMap.arc(
-        WIDTH/2 - diffVector.x*worldScale, 
-        HEIGHT/2 - diffVector.y*worldScale,
-        size*worldScale, 0, 2*Math.PI
+        WIDTH/2 - diffVector.x*WORLDSCALE, 
+        HEIGHT/2 - diffVector.y*WORLDSCALE,
+        size*WORLDSCALE, 0, 2*Math.PI
     );
     ctxMap.fill();
 }

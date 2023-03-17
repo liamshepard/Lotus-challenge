@@ -29,7 +29,7 @@ class Player {
 
         // drawing top down info
         this.drawTopDown = drawTopDown; //bool
-        this.mapSize = [2*worldScale, 4*worldScale];
+        this.mapSize = [2*WORLDSCALE, 4*WORLDSCALE];
          //2*4 meters on screen
     }
 
@@ -54,8 +54,8 @@ class Player {
     update() {
 
         //code for inertial impulse after a crash
-        this.#x += this.impulseVector.x*hz;
-        this.#y += this.impulseVector.y*hz;
+        this.#x += this.impulseVector.x*HZ;
+        this.#y += this.impulseVector.y*HZ;
 
         let impulseStop = 2;
         this.impulseVector.scale(0.8);
@@ -86,21 +86,21 @@ class Player {
         let velocityVector = Vector.normalize(this.directionVector);
         velocityVector.scale(this.speed);
         
-        this.#x += velocityVector.x*hz;
-        this.#y += velocityVector.y*hz;
+        this.#x += velocityVector.x*HZ;
+        this.#y += velocityVector.y*HZ;
     }
 
     acceleration(speed) {
         //f(x) = sqrt(acceleration^2 - (x/10)^2)
         let temp = this.accelerationTop2 - (speed/12)**2;
         if (temp > 0) {
-            return Math.sqrt(temp)*hz;
+            return Math.sqrt(temp)*HZ;
         } else {return 0;}
     }
 
     deceleration() {
-        if (this.speed - this.brakeForce*hz < 0) {
+        if (this.speed - this.brakeForce*HZ < 0) {
             return this.speed;
-        } else {return this.brakeForce*hz;}
+        } else {return this.brakeForce*HZ;}
     }
 }
