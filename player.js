@@ -10,6 +10,8 @@ class Player {
         this.#y = y;
         this.directionVector = new Vector(0,-30);
         this.speed = 0;
+
+        this.impulseVector = new Vector(100,0);
         
         this.accelerationTop = 5;
         this.accelerationTop2 = this.accelerationTop**2; 
@@ -42,21 +44,28 @@ class Player {
     drawToMiniMap() {
         ctxMap.fillStyle = "black";
         ctxMap.fillRect(WIDTH / 2 - this.mapSize[0] / 2, HEIGHT / 2 - this.mapSize[1] / 2, this.mapSize[0], this.mapSize[1]);
-        ctxMap.beginPath();
-        ctxMap.moveTo(WIDTH / 2, HEIGHT / 2);
-        ctxMap.lineTo(WIDTH / 2 - this.directionVector.x * this.speed, HEIGHT / 2 + this.directionVector.y * this.speed);
-        ctxMap.stroke();
+        // ctxMap.beginPath();
+        // ctxMap.moveTo(WIDTH / 2, HEIGHT / 2);
+        // ctxMap.lineTo(WIDTH / 2 - this.directionVector.x * this.speed, HEIGHT / 2 + this.directionVector.y * this.speed);
+        // ctxMap.stroke();
         ctxMap.closePath();
-        console.log(this.speed);
     }    
 
     update() {
+
+        //code for inertial impulse after a crash
+        this.#x += this.impulseVector.x*hz;
+        this.#y += this.impulseVector.y*hz;
+
+        let impulseStop = 2;
+        this.impulseVector.scale(0.8);
+        if (this.impulseVector.length < impulseStop)
 
         if (this.speed > 0) { //prevents turning if car is stationary
             let turn = (
                 keyPresses[this.controlDict.turnRight] - 
                 keyPresses[this.controlDict.turnLeft]
-            )*Math.PI/60;
+            )*Math.PI/100;
             // console.log(keyPresses[this.controlDict.turnLeft])
             this.directionVector.rotate2d(turn);
         }
@@ -72,18 +81,18 @@ class Player {
         }
         
         preOutput.innerHTML = this.speed;
-        preOutput.innerHTML += "\nx: " + this.x + "\ty: " + this.y;
+        preOutput.innerHTML += "\nx: " + Math.round(this.x*100)/100 + "\ty: " + Math.round(this.y*100)/100;
 
         let velocityVector = Vector.normalize(this.directionVector);
         velocityVector.scale(this.speed);
         
-        this.#x += velocityVector.x;
-        this.#y += velocityVector.y;
+        this.#x += velocityVector.x*hz;
+        this.#y += velocityVector.y*hz;
     }
 
     acceleration(speed) {
         //f(x) = sqrt(acceleration^2 - (x/10)^2)
-        let temp = this.accelerationTop2 - (speed/6)**2;
+        let temp = this.accelerationTop2 - (speed/12)**2;
         if (temp > 0) {
             return Math.sqrt(temp)*hz;
         } else {return 0;}
