@@ -108,6 +108,7 @@ const HEIGHT = ctx.canvas.height;
 
 let bezColl = new BezierCurveCollection(bez);
 
+
 // let P = new Vector(0, 0);
 // console.log(bezColl.approxDistToCurrent(P));
 
